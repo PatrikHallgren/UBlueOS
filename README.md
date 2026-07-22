@@ -9,7 +9,7 @@ Built for a laptop with NVIDIA (now) and a Framework laptop with AMD (future), w
 | Image | Base | Target |
 |---|---|---|
 | `ghcr.io/patrikhallgren/ublueos:stable` | bazzite-dx | AMD/Intel GPUs |
-| `ghcr.io/patrikhallgren/ublueos:stable-nvidia` | bazzite-dx-nvidia-open | NVIDIA (RTX 2000+) |
+| `ghcr.io/patrikhallgren/ublueos:stable-nvidia` | bazzite-dx-nvidia | NVIDIA (RTX 2000+) |
 
 ## What's Included
 

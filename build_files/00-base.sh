@@ -29,7 +29,7 @@ dnf5 -y install \
 # --- Qt/GTK theming bridge ---
 dnf5 -y install \
   qt6ct kvantum        `# Qt6 theme selector + engine` \
-  adw-gtk3             `# libadwaita → GTK3 bridge`
+  adw-gtk3-theme       `# libadwaita → GTK3 theme bridge`
 
 # --- Nerd Fonts (Cascadia Code — icons for starship/fuzzel/neovim) ---
 dnf5 -y --enable-repo=terra install cascadiacode-nerd-fonts

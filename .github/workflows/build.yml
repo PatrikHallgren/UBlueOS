@@ -27,7 +27,7 @@ jobs:
           - name: stable
             base_image: ghcr.io/ublue-os/bazzite-dx:stable
           - name: stable-nvidia
-            base_image: ghcr.io/ublue-os/bazzite-dx-nvidia-open:stable
+            base_image: ghcr.io/ublue-os/bazzite-dx-nvidia:stable
 
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ matrix.variant.name }}

@@ -2,7 +2,7 @@
 #
 # Matrix build: two variants from the same scripts.
 #   ghcr.io/patrikhallgren/ublueos:stable        — AMD/Intel (bazzite-dx)
-#   ghcr.io/patrikhallgren/ublueos:stable-nvidia — NVIDIA   (bazzite-dx-nvidia-open)
+#   ghcr.io/patrikhallgren/ublueos:stable-nvidia — NVIDIA   (bazzite-dx-nvidia)
 #
 # Build arg selects the base. GitHub Actions sets it via matrix.
 
