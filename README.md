@@ -28,8 +28,14 @@ Built for a laptop with NVIDIA (now) and a Framework laptop with AMD (future), w
 
 ### Apps (baked in)
 - **ProtonPass** (Flatpak)
-- **Private Internet Access** VPN client (native .rpm)
-- **pCloud Drive** (CLI mount tool at `/opt/pcloud`)
+- **pCloud Drive** (CLI mount tool at `/opt/pcloud`, run `pcloudcc` to set up)
+- **LibreWolf** browser
+
+### Post-rebase setup (run once on your machine)
+```bash
+# Private Internet Access VPN
+sudo /usr/share/ublue-os/install-pia.sh
+```
 
 ### Developer Tooling
 - Neovim (+ normie-nvim config on first login via git clone)
