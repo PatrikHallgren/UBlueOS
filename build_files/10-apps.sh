@@ -10,7 +10,7 @@ dnf5 -y --enable-repo=terra install ghostty
 
 # --- ProtonPass (Flatpak) ---
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub com.protonpass.desktop
+flatpak install -y flathub me.proton.Pass
 
 # --- Private Internet Access (PIA) ---
 # Download the latest PIA Linux client .rpm
