@@ -12,10 +12,10 @@ dnf5 -y --enable-repo=terra install ghostty
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install -y flathub me.proton.Pass
 
-# --- Brave Browser (from official RPM repo) ---
+# --- Brave Origin (from official RPM repo) ---
 dnf5 config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-dnf5 -y install brave-browser
+dnf5 -y install brave-origin
 
 # --- pCloud Drive ---
 # /opt is symlinked to /var/opt on atomic images, so use /var/opt directly
