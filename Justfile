@@ -1,4 +1,4 @@
-# UBlueOS — Justfile for local builds
+# UBlueOS — Justfile for CI and local builds
 # Based on ublue-os/image-template Justfile
 
 IMAGE_NAME         := ""
@@ -16,23 +16,28 @@ if ! IMAGE_NAME != "" && IMAGE_NAME == "" {
 image_name:
   echo {{IMAGE_NAME}}
 
-# Generates a default tag based on date
+# Generates a default tag
 generate-default-tag:
   echo {{DEFAULT_TAG}}
 
 # Build the image locally
-build target_image=IMAGE_NAME tag=DEFAULT_TAG:
+# Usage: just build <image_name> <tag> [base_image]
+build target_image=IMAGE_NAME tag=DEFAULT_TAG base="ghcr.io/ublue-os/bazzite-dx:stable":
   sudo podman build \
-    --build-arg BASE_IMAGE=ghcr.io/ublue-os/bazzite-dx:stable \
+    --build-arg BASE_IMAGE={{base}} \
+    --label="containers.bootc=1" \
     -t {{target_image}}:{{tag}} \
     .
 
-# Build NVIDIA variant locally
-build-nvidia target_image=IMAGE_NAME tag=DEFAULT_TAG:
-  sudo podman build \
-    --build-arg BASE_IMAGE=ghcr.io/ublue-os/bazzite-dx-nvidia-open:stable \
-    -t {{target_image}}:{{tag}}-nvidia \
-    .
+# Tag the image with additional aliases
+# Usage: just tag-images <image_name> <source_tag> <alias_tags>
+tag-images target_image=IMAGE_NAME source_tag=DEFAULT_TAG alias_tags="":
+  podman tag {{target_image}}:{{source_tag}} {{target_image}}:{{alias_tags}}
+
+# Generate build tags (comma-separated)
+generate-build-tags target_image=IMAGE_NAME base_tag=DEFAULT_TAG:
+  DATE_TAG=$(date -u +%Y%m%d)
+  echo "{{target_image}}:{{base_tag}}-${DATE_TAG},{{target_image}}:{{base_tag}}"
 
 # Rechunk with rpm-ostree for smaller deltas
 ostree-rechunk target_image=IMAGE_NAME tag=DEFAULT_TAG:
