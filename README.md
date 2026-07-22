@@ -35,6 +35,9 @@ Built for a laptop with NVIDIA (now) and a Framework laptop with AMD (future), w
 ```bash
 # Private Internet Access VPN
 sudo /usr/share/ublue-os/install-pia.sh
+
+# pCloud drive
+sudo /usr/share/ublue-os/install-pcloud.sh
 ```
 
 ### Developer Tooling

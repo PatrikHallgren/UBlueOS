@@ -17,16 +17,9 @@ dnf5 config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3
 rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 dnf5 -y install brave-origin
 
-# --- pCloud Drive ---
-PCLOUD_URL="https://pcloud.com/download-file?platform=linux&arch=x86_64&type=tar.gz"
-PCLOUD_TAR="/tmp/pcloud.tar.gz"
-PCLOUD_DIR="/opt/pcloud"
-curl -fL "$PCLOUD_URL" -o "$PCLOUD_TAR"
-mkdir -p "$PCLOUD_DIR"
-tar xzf "$PCLOUD_TAR" -C "$PCLOUD_DIR" --strip-components=1
-rm -f "$PCLOUD_TAR"
-chmod +x "$PCLOUD_DIR/pcloud" "$PCLOUD_DIR/pcloudcc" 2>/dev/null || true
-ln -sf "$PCLOUD_DIR/pcloudcc" /usr/local/bin/pcloudcc
+# --- pCloud CLI — REMOVED from CI build ---
+# pCloud's download URLs are unreliable from CI runners.
+# Install post-rebase: sudo /usr/share/ublue-os/install-pcloud.sh
 
 # --- LibreWolf (privacy browser) ---
 curl -fsSL https://repo.librewolf.net/librewolf.repo \
