@@ -20,6 +20,9 @@ COPY --from=ctx / /
 
 # Terra is pre-enabled on Bazzite — good for mangowm, noctalia, fonts
 
+### === Fix /opt (atomic images symlink it to /var/opt, which breaks RPMs) ===
+RUN rm /opt && mkdir /opt
+
 ### === Phase 1: Base system tweaks ===
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
