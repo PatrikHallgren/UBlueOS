@@ -1,0 +1,6 @@
+---
+repositoryID: f4c5b6a7-1234-5678-9abc-def012345678  # Replace with your ArtifactHub repo ID
+users:
+  - PatrikHallgren
+owners:
+  - PatrikHallgren

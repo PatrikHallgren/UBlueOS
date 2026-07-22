@@ -1,0 +1,13 @@
+[Unit]
+Description=UBlueOS first-login setup
+After=network-online.target
+Wants=network-online.target
+ConditionPathExists=!/home/%u/.config/.ublueos-first-login
+
+[Service]
+Type=oneshot
+ExecStart=/usr/share/ublue-os/first-login.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

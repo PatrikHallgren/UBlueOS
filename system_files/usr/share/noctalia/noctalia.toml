@@ -1,0 +1,30 @@
+# Noctalia v5 config — Mango compositor + Gruvbox theme
+# See https://docs.noctalia.dev/v5/
+
+[shell]
+theme = "gruvbox"
+
+[bar]
+position = "top"
+height = 4
+
+[notifications]
+position = "top-right"
+
+[dock]
+enabled = false
+
+[launcher]
+enabled = true
+
+[wallpaper]
+mode = "fill"
+path = "/usr/share/wallpapers/gruvbox-default.png"
+
+[idle]
+timeout = 300
+lock-command = "swaylock"
+
+[night-light]
+enabled = true
+temperature = 3500

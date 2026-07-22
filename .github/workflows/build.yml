@@ -1,0 +1,85 @@
+---
+name: Build UBlueOS image
+on:
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '05 10 * * *'  # 10:05am UTC everyday
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**/README.md'
+  workflow_dispatch:
+
+env:
+  IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ matrix.variant.name }}
+  cancel-in-progress: true
+
+jobs:
+  build_push:
+    name: Build ${{ matrix.variant.name }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        variant:
+          - name: stable
+            base_image: ghcr.io/ublue-os/bazzite-dx:stable
+            tags: "stable,latest"
+          - name: stable-nvidia
+            base_image: ghcr.io/ublue-os/bazzite-dx-nvidia-open:stable
+            tags: "stable-nvidia"
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Maximize build space
+        uses: ublue-os/remove-unwanted-software@latest
+
+      - name: Generate tags
+        id: gen-tags
+        run: |
+          DATE_TAG="${{ matrix.variant.name }}-$(date -u +%Y%m%d)"
+          echo "TAGS=${IMAGE_REGISTRY,,}/ublueos:${DATE_TAG},${IMAGE_REGISTRY,,}/ublueos:${{ matrix.variant.tags }}" >> $GITHUB_ENV
+
+      # This builds the container image with the matrix variant's base
+      - name: Build Image
+        id: build-image
+        uses: ublue-os/build/main@main
+        with:
+          build-args: |
+            BASE_IMAGE=${{ matrix.variant.base_image }}
+          tags: ${{ env.TAGS }}
+
+      # Optional: rechunk for smaller delta updates
+      - name: Rechunk with rpm-ostree
+        id: rechunk
+        run: |
+          sudo dnf -y install rpm-ostree
+          sudo rpm-ostree cli rechunk --repo=/var/tmp/repo $(ls -d /var/tmp/repo/*/)
+
+      # Sign with cosign (key stored in GitHub secrets)
+      - name: Sign image
+        uses: ublue-os/sign-image@latest
+        with:
+          cosign-private-key: ${{ secrets.SIGNING_SECRET }}
+          cosign-password: ""
+          tags: ${{ env.TAGS }}
+
+      # Generate disk images (ISO / qcow2) — uncomment when needed
+      # - name: Generate disk images
+      #   uses: ublue-os/generate-disk-images@latest
+      #   with:
+      #     image-ref: "${{ env.TAGS }}"
+      #     disk-type: "iso"

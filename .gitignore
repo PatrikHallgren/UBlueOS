@@ -1,0 +1,3 @@
+cosign.key
+*.rpm
+.DS_Store
